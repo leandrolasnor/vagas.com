@@ -31,3 +31,7 @@
 
 en:
   hello: "Hello world"
+  dry_validation:
+    errors:
+      job_not_found: 'Job not found!'
+      person_not_found: 'Person not found!'
