@@ -1,0 +1,304 @@
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 2.6.6
+  TargetRailsVersion: 5.0
+
+  NewCops: enable
+
+  UseCache: false
+
+Layout/TrailingWhitespace:
+  Enabled: true
+  Exclude:
+    - db/migrate/**/*
+    - db/schema.rb
+
+Layout/EmptyLinesAroundBlockBody:
+  Enabled: true
+  Exclude:
+    - db/schema.rb
+
+Layout/DotPosition:
+  Enabled: false
+
+Layout/FirstArrayElementLineBreak:
+  Enabled: true
+
+Layout/FirstHashElementLineBreak:
+  Enabled: true
+
+Layout/FirstArrayElementIndentation:
+  EnforcedStyle: consistent
+
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
+Layout/HashAlignment:
+  Enabled: true
+  AllowMultipleStyles: true
+  EnforcedHashRocketStyle:
+    - key
+    - table
+  EnforcedColonStyle:
+    - key
+    - table
+
+Layout/MultilineAssignmentLayout:
+  Enabled: true
+  EnforcedStyle: same_line
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+Layout/SpaceInsideHashLiteralBraces:
+  Enabled: true
+  EnforcedStyle: space
+
+Layout/LineLength:
+  Enabled: true
+  Max: 80
+  Exclude:
+    - spec/rails_helper.rb
+    - spec/spec_helper.rb
+    - test/test_helper.rb
+    - db/schema.rb
+    - db/migrate/**/*
+    - config/**/*
+    - bin/**/*
+    - Rakefile
+    - Gemfile
+
+Lint/BooleanSymbol:
+  Enabled: true
+
+Lint/EmptyBlock:
+  Enabled: true
+
+Lint/MissingSuper:
+  Enabled: false
+
+Lint/NestedMethodDefinition:
+  Enabled: true
+
+Lint/RescueException:
+  Enabled: true
+
+Lint/SuppressedException:
+  Enabled: true
+
+Layout/SpaceInLambdaLiteral:
+  EnforcedStyle: require_space
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/BlockNesting:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Enabled: false
+
+Metrics/ParameterLists:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Naming/AccessorMethodName:
+  Enabled: false
+
+Naming/InclusiveLanguage:
+  Enabled: false
+
+Naming/PredicateName:
+  Enabled: false
+
+Naming/RescuedExceptionsVariableName:
+  PreferredName: error
+
+Naming/VariableNumber:
+  Enabled: false
+
+Naming/MethodParameterName:
+  Enabled: false
+
+Style/HashSyntax:
+  Enabled: true
+  Exclude:
+    - db/migrate/**/*
+    - db/schema.rb
+
+Style/StringLiterals:
+  Enabled: false
+
+Style/AccessorGrouping:
+  EnforcedStyle: separated
+
+Style/CaseLikeIf:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+  Exclude:
+    - 'config/application.rb'
+
+Style/Documentation:
+  Enabled: false
+
+Style/EmptyMethod:
+  Enabled: true
+
+Style/ExponentialNotation:
+  Enabled: false
+
+Style/FormatString:
+  Enabled: true
+
+Style/FormatStringToken:
+  Enabled: true
+
+Style/GuardClause:
+  Enabled: false
+
+Style/HashAsLastArrayItem:
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/Lambda:
+  EnforcedStyle: literal
+
+Style/NumericLiterals:
+  Enabled: false
+
+Style/OptionalBooleanParameter:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+  Exclude:
+    - db/schema.rb
+    - db/migrate/**/*
+    - bin/**/*
+
+Style/MethodCallWithArgsParentheses:
+  Enabled: true
+  AllowedMethods:
+    - raise
+    - render
+    - use
+    - yield
+    - add
+    - Success
+    - Failure
+    - head
+    - insert_before
+    - resource
+  Exclude:
+    - 'spec/**/*'
+    - db/schema.rb
+    - db/migrate/**/*
+
+Style/LambdaCall:
+  Enabled: false
+
+Style/RaiseArgs:
+  Enabled: false
+
+Style/RedundantSelf:
+  Enabled: false
+
+Style/RescueModifier:
+  Enabled: false
+
+Style/SymbolArray:
+  Enabled: false
+
+Style/TrailingUnderscoreVariable:
+  Enabled: false
+
+Style/WordArray:
+  Enabled: false
+
+# Rails
+Rails/CreateTableWithTimestamps:
+  Enabled: true
+
+Rails/Delegate:
+  Enabled: false
+
+Rails/DynamicFindBy:
+  Enabled: true
+
+Rails/FilePath:
+  Enabled: false
+
+Rails/NotNullColumn:
+  Enabled: true
+
+Rails/ReversibleMigration:
+  Enabled: true
+
+Rails/SkipsModelValidations:
+  Enabled: true
+
+Rails/UnknownEnv:
+  Environments:
+    - development
+    - test
+    - production
+    - staging
+
+# Rspec
+RSpec/AnyInstance:
+  Enabled: false
+
+RSpec/ContextWording:
+  Prefixes:
+    - when
+    - with
+    - without
+    - associations
+    - validations
+    - callbacks
+    - scopes
+    - and
+    - "on"
+
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
+RSpec/NamedSubject:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Enabled: false
+
+RSpec/Rails/AvoidSetupHook:
+  Enabled: true
+
+RSpec/SubjectStub:
+  Enabled: false
