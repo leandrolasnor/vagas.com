@@ -6,17 +6,13 @@ Rails.application.routes.draw do
   root to: redirect('rails/info/routes')
 
   namespace :v1 do
-    post :vagas, to: 'v1::jobs#create'
-    post :pessoas, to: 'v1::peoples#create'
-    post :candidaturas, to: 'v1::application#create'
+    post :vagas, to: 'jobs#create'
+    post :pessoas, to: 'peoples#create'
+    post :candidaturas, to: 'application#create'
 
-    namespace :vagas do
-      resources :candidaturas, on: :member do
-        get :ranking, to: 'v1::jobs#show_applications'
-      end
-    end
+    get '/vagas/:vaga_id/candidaturas/ranking', to: 'jobs#show_applications', as: :ranking
   end
 
   get '/health', to: proc { [200, {}, ['success']] }
-  match '*path' => 'api#not_found', via: :all
+  match '*path', via: :all, to: proc { [404, {}, nil] }
 end
