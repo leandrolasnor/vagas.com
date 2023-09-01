@@ -3,18 +3,6 @@
 class Dijkstra
   extend Dry::Initializer
 
-  class Tracing
-    extend Dry::Initializer
-
-    param :source
-    param :destination
-
-    option :starting_point, default: -> { source }
-    option :ending_point, default: -> { destination }
-    option :distance, default: -> { 0 }
-    option :path, default: -> { [] }
-  end
-
   param :edges
 
   option :map, default: -> { map_vertices }
@@ -25,17 +13,17 @@ class Dijkstra
   option :adjacent, default: -> { Array.new(no_of_vertices) { Array.new(no_of_vertices) { false } } }
   option :graph, default: -> { Array.new(no_of_vertices) { Array.new(no_of_vertices) { 0 } } }
 
-  def call(source:, destination:)
-    traced = Tracing.new(source: source, destination: destination)
+  def call(origin, destination)
+    traced = Tracing.new(origin, destination)
 
     adjacent = adjacent_matrix
     graph = graph_matrix
 
-    source = map[source]
+    origin = map[origin]
     destination = map[destination]
 
-    chosen = source
-    weight[source] = 0
+    chosen = origin
+    weight[origin] = 0
 
     while chosen != destination
       adjacent[chosen].each_with_index do |neighbor, i|
@@ -49,7 +37,7 @@ class Dijkstra
       end
 
       weight[chosen] = nil
-      chosen = weight.index(weight.min)
+      chosen = weight.index(weight.min_by { _1.nil? ? Float::INFINITY : _1 })
     end
 
     traced.distance = weight[destination]
@@ -61,6 +49,20 @@ class Dijkstra
     end
 
     traced
+  end
+
+  class ::Tracing
+    extend Dry::Initializer
+    attr_writer :distance
+    attr_writer :path
+
+    param :origin
+    param :destination
+
+    option :starting_point, default: -> { origin }
+    option :ending_point, default: -> { destination }
+    option :distance, default: -> { 0 }
+    option :path, default: -> { [] }
   end
 
   private

@@ -5,6 +5,20 @@ class Calculator::Application
 
   param :application
 
+  option :job, default: -> { application.job }
+  option :person, default: -> { application.person }
+
+  option :edges, default: -> { Rails.cache.fetch(:edges) }
+  option :graph, default: -> { Dijkstra.new(edges) }
+  option :trace, default: -> { graph.(job.localizacao, person.localizacao) }
+
+  option :d, default: -> { application.distances.find { _2.include?(trace.distance) }.first.to_i }
+
+  option :nv, default: -> { job.nivel }
+  option :nc, default: -> { person.nivel }
+
+  option :n, default: -> { 100 - (25 * (nv - nc).abs) }
+
   def score!
     application.update(score: calcule_score)
   end
@@ -13,22 +27,5 @@ class Calculator::Application
 
   def calcule_score
     @calcule_score ||= ((n + d) / 2).to_i
-  end
-
-  def n
-    nv = application.job.nivel
-    nc = application.person.nivel
-    100 - (25 * (nv - nc).abs)
-  end
-
-  def d
-    edges = Rails.cache.fetch(:edges)
-    points = {
-      source: application.job.localizacao,
-      destination: application.person.localizacao
-    }
-
-    traced = Dijkstra.new(edges).(**points)
-    traced.distance
   end
 end
