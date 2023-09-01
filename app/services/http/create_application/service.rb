@@ -3,14 +3,14 @@
 class Http::CreateApplication::Service < Http::Service
   option :serializer, default: -> { ::Serializer }
   option :transaction, default: -> { CreateApplication::Transaction }
-  option :worker, default: -> { ::CalculateScore::Worker }
+  option :job, default: -> { ::CalculateScore::Job }
 
   Contract = ::Contract
 
   def call
     transaction.
       operations[:create].
-      subscribe('created') { worker.perform_async(_1[:application].id) }
+      subscribe('created') { job.perform_later(_1[:application].id) }
 
     transaction.new.(params) do
       _1.failure do |e|
