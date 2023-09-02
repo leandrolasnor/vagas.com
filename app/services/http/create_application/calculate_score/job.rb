@@ -3,11 +3,7 @@
 class Http::CreateApplication::CalculateScore::Job < ApplicationJob
   queue_as :default
 
-  def perform(application_id)
-    CalculateScore::Monad.new(id: application_id).() do
-      _1.failure do |e|
-        Rails.logger.error(e)
-      end
-    end
+  def perform(id)
+    CalculateScore::Monad.new(id).call.failure { |e| Rails.logger.error(e) }
   end
 end
