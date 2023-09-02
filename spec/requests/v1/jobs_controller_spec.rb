@@ -22,7 +22,7 @@ RSpec.describe V1::JobsController do
             titulo: 'Titulo da Vaga',
             descricao: 'Descricao da Vaga',
             localizacao: 'Remoto',
-            nivel: 2
+            nivel: CreateJob::Model::Job.levels.keys[params[:nivel]]
           }
         end
 
