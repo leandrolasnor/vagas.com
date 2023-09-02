@@ -5,17 +5,19 @@ class Calculator::Application
 
   param :application
 
+  option :distances, default: -> { CalculateScore::Model::Application::DISTANCES }
+
   option :job, default: -> { application.job }
   option :person, default: -> { application.person }
 
   option :edges, default: -> { Rails.cache.fetch(:edges) }
   option :graph, default: -> { Dijkstra.new(edges) }
-  option :trace, default: -> { graph.(job.localizacao, person.localizacao) }
+  option :trace, default: -> { graph.(job.location, person.location) }
 
-  option :d, default: -> { application.distances.find { _2.include?(trace.distance) }.first.to_i }
+  option :d, default: -> { distances.select { _2.include?(trace.distance) }.keys[0].to_s.to_i }
 
-  option :nv, default: -> { job.nivel }
-  option :nc, default: -> { person.nivel }
+  option :nv, default: -> { job.level }
+  option :nc, default: -> { person.level }
 
   option :n, default: -> { 100 - (25 * (nv - nc).abs) }
 
