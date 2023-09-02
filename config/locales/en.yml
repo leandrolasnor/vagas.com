@@ -35,3 +35,4 @@ en:
     errors:
       job_not_found: 'Job not found!'
       person_not_found: 'Person not found!'
+      level_invalid: 'Level Invalid!'
