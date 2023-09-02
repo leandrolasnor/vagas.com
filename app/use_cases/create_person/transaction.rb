@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CreatePerson::Transaction
-  include Dry::Transaction(container: ::Container)
+  include Dry::Transaction(container: CreatePerson::Container)
 
   tee :params
   try :validate, with: 'steps.validate', catch: StandardError

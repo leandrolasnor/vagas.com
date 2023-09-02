@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class CreateJob::Container
-  include Dry::Container::Mixin
+  extend Dry::Container::Mixin
 
-  register 'steps.validate', -> { ::Steps::Validate.new }
-  register 'steps.create', -> { ::Steps::Create.new }
+  register 'steps.validate', -> { CreateJob::Steps::Validate.new }
+  register 'steps.create', -> { CreateJob::Steps::Create.new }
 end

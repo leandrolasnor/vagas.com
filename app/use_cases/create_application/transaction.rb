@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class CreateJob::Transaction
-  include Dry::Transaction(container: ::Container)
+class CreateApplication::Transaction
+  include Dry::Transaction(container: CreateApplication::Container)
 
   tee :params
   try :validate, with: 'steps.validate', catch: StandardError

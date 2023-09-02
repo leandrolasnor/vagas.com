@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-class CreateApplication::Contract
-  extends ::Macros
+class CreateApplication::Contract < CreateApplication::Macros
 
   params do
     required(:id_vaga).filled(:integer)

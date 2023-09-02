@@ -2,7 +2,6 @@
 
 class CreateApplication::Steps::Validate
   include Dry::Monads[:result]
-  include Dry::Events::Publisher
   extend  Dry::Initializer
 
   option :contract, default: -> { ::Contract }
