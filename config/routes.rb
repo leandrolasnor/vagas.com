@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   root to: proc { [200, {}, ['success']] }
 
-  namespace :v1 do
+  scope '/v1' do
     post :vagas, to: 'jobs#create'
     post :pessoas, to: 'people#create'
     post :candidaturas, to: 'applications#create'
