@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class V1::ApplicationsController < V1::BaseController
+class ApplicationsController < BaseController
   def create
     status, content, serializer = Http::CreateApplication::Service.(create_params)
     render json: content, status: status, serializer: serializer

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class V1::JobsController < V1::BaseController
+class JobsController < BaseController
   def create
     status, content, serializer = Http::CreateJob::Service.(create_params)
     render json: content, status: status, serializer: serializer
@@ -24,8 +24,6 @@ class V1::JobsController < V1::BaseController
   end
 
   def ranking_params
-    params.permit(
-      :vaga_id
-    )
+    params.permit(:job_id)
   end
 end

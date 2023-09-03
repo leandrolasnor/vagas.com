@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class V1::PeopleController < V1::BaseController
+class PeopleController < BaseController
   def create
     status, content, serializer = Http::CreatePerson::Service.(create_params)
     render json: content, status: status, serializer: serializer
