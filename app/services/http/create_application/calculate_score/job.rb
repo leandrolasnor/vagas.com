@@ -4,6 +4,7 @@ class Http::CreateApplication::CalculateScore::Job < ApplicationJob
   queue_as :default
 
   def perform(id)
-    CalculateScore::Monad.new.(id).failure { Rails.logger.error(_1) }
+    res = CalculateScore::Monad.new.(id)
+    Rails.logger.error(res.exception) if res.failure?
   end
 end
