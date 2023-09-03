@@ -211,6 +211,8 @@ Style/MethodCallWithArgsParentheses:
     - head
     - insert_before
     - resource
+    - failure
+    - load_extensions
   Exclude:
     - 'spec/**/*'
     - db/schema.rb
