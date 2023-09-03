@@ -3,8 +3,6 @@
 class Http::CreateApplication::Serializer < ActiveModel::Serializer
   attributes :nome, :descricao
 
-  private
-
   def nome
     object.person.name
   end

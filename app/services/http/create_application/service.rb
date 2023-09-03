@@ -1,20 +1,25 @@
 # frozen_string_literal: true
 
 class Http::CreateApplication::Service < Http::Service
-  option :serializer, default: -> { ::Serializer }
-  option :transaction, default: -> { CreateApplication::Transaction }
-  option :job, default: -> { ::CalculateScore::Job }
+  option :serializer, default: -> { Http::CreateApplication::Serializer }
+  option :transaction, default: -> { CreateApplication::Transaction.new }
+  option :worker, default: -> { Http::CreateApplication::CalculateScore::Job }
 
-  Contract = Http::CreateApplication::Contract
+  Contract = Http::CreateApplication::Contract.new
 
   def call
-    transaction.
-      operations[:create].
-      subscribe('created') { job.perform_later(_1[:application].id) }
+    transaction.operations[:create].subscribe('application.created') do
+      worker.perform_later(_1[:application].id)
+    end
 
-    transaction.new.(params) do
-      _1.failure do |e|
-        Rails.logger.error(e)
+    transaction.(params) do
+      _1.failure :validate do |f|
+        [:unprocessable_entity, f.errors.to_h]
+      end
+
+      _1.failure do |f|
+        debugger
+        Rails.logger.error(f)
         [:internal_server_error]
       end
 
