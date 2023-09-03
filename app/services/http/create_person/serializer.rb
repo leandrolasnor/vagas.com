@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class Http::CreatePerson::Serializer < ActiveModel::Serializer
-  attributes :name, :profissao, :localizacao, :nivel
-
-  private
+  attributes :nome, :profissao, :localizacao, :nivel
 
   def nome
     object.name
