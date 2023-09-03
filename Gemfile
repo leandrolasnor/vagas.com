@@ -63,6 +63,8 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker', github: 'faker-ruby/faker'
   gem 'rspec-rails'
+  gem 'rswag-specs'
+  gem 'rswag'
   gem 'simplecov', require: false
   gem 'timecop'
 end
