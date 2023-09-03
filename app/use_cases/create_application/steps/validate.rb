@@ -4,12 +4,9 @@ class CreateApplication::Steps::Validate
   include Dry::Monads[:result]
   extend  Dry::Initializer
 
-  option :contract, default: -> { ::Contract }
+  option :contract, default: -> { CreateApplication::Contract.new }
 
   def call(params)
-    validate = contract.new.(params)
-    raise StandardError.new(validate.errors.to_h.to_json) if validate.failure?
-
-    params
+    contract.(params).to_monad
   end
 end

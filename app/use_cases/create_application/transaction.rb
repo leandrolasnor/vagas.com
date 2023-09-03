@@ -3,11 +3,6 @@
 class CreateApplication::Transaction
   include Dry::Transaction(container: CreateApplication::Container)
 
-  tee :params
-  try :validate, with: 'steps.validate', catch: StandardError
+  step :validate, with: 'steps.validate'
   try :create, with: 'steps.create', catch: StandardError
-
-  private
-
-  def params(i) end
 end
