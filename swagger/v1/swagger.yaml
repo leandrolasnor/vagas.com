@@ -1,0 +1,105 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/v1/candidaturas":
+    post:
+      summary: create application
+      parameters: []
+      responses:
+        '201':
+          description: successful
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id_vaga:
+                  type: integer
+                id_pessoa:
+                  type: integer
+              required:
+              - id_vaga
+              - id_pessoa
+  "/v1/vagas":
+    post:
+      summary: create job
+      parameters: []
+      responses:
+        '201':
+          description: successful
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                empresa:
+                  type: string
+                titulo:
+                  type: string
+                descricao:
+                  type: string
+                localizacao:
+                  type: string
+                nivel:
+                  type: integer
+              required:
+              - empresa
+              - titulo
+              - descricao
+              - localizacao
+              - nivel
+  "/v1/vagas/{job_id}/candidaturas/ranking":
+    parameters:
+    - name: job_id
+      in: path
+      description: job_id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: ranking job
+      responses:
+        '200':
+          description: successful
+  "/v1/pessoas":
+    post:
+      summary: create person
+      parameters: []
+      responses:
+        '201':
+          description: successful
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                profissao:
+                  type: string
+                localizacao:
+                  type: string
+                nivel:
+                  type: integer
+              required:
+              - nome
+              - profissao
+              - localizacao
+              - nivel
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: 127.0.0.1:3000/
