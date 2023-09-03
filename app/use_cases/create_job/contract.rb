@@ -1,9 +1,19 @@
 # frozen_string_literal: true
 
-class CreateJob::Contract < Dry::Validation::Contract
-  config.messages.backend = :i18n
+module Types
+  include Dry.Types()
 
+  LevelJob = Types::String.constructor do
+    CreateJob::Model::Job.levels.key(_1)
+  end
+end
+
+class CreateJob::Contract < ApplicationContract
   params do
-    required(:nivel).value(included_in?: CreateJob::Model::Job.levels.keys)
+    required(:empresa).filled(:string)
+    required(:titulo).filled(:string)
+    required(:descricao).filled(:string)
+    required(:localizacao).filled(:string)
+    required(:nivel).type(Types::LevelJob).value(included_in?: CreateJob::Model::Job.levels.keys)
   end
 end

@@ -2,14 +2,11 @@
 
 class CreateJob::Steps::Validate
   include Dry::Monads[:result]
-  extend  Dry::Initializer
+  extend Dry::Initializer
 
   option :contract, default: -> { CreateJob::Contract.new }
 
   def call(params)
-    validate = contract.(params)
-    Failure(validate.errors.to_h.to_json) if validate.failure?
-
-    params
+    contract.(params).to_monad
   end
 end
