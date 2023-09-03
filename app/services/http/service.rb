@@ -10,9 +10,9 @@ class Http::Service
     return [:unprocessable_entity, contract.errors.to_h] if contract.failure?
 
     new(args.to_h).call
-  rescue StandardError => e
+  rescue StandardError => error
     debugger
-    Rails.logger.error(e)
+    Rails.logger.error(error)
     [:internal_server_error]
   end
 end
