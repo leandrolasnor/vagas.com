@@ -1,29 +1,19 @@
 # frozen_string_literal: true
 
 class Ranking::Monad
-  include Dry::Monads[:result, :try]
+  include Dry::Monads[:result]
   extend  Dry::Initializer
 
-  param :job_id
-
-  option :model, default: -> { Ranking::Model::Job }
+  option :model, default: -> { Ranking::Model::Application }
   option :limit, default: -> { 25 }
 
-  def call
-    res = Try[StandardError] do
-      job.includes(applications: :person).limit(limit).order(score: :desc)
-    end
-
-    res.error? ? Failure(res.exception) : res.value!
-  end
-
-  private
-
-  def job
-    res = Try[ActiveRecord::RecordNotFound] do
-      model.find(job_id)
-    end
-
-    res.error? ? Failure(res.exception) : res.value!
+  def call(job_id)
+    Success(
+      model.
+        includes(:person).
+        where(job_id: job_id).
+        limit(limit).
+        order(score: :desc)
+    )
   end
 end
