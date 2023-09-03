@@ -6,6 +6,7 @@ class Ranking::Monad
 
   option :model, default: -> { Ranking::Model::Application }
   option :limit, default: -> { 25 }
+  option :offset, default: -> { 0 }
 
   def call(job_id)
     Success(
@@ -13,6 +14,7 @@ class Ranking::Monad
         includes(:person).
         where(job_id: job_id).
         limit(limit).
+        offset(offset).
         order(score: :desc)
     )
   end
