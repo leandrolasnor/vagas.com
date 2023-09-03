@@ -4,6 +4,6 @@ FactoryBot.define do
   factory :application do
     job
     person
-    score { ["100", "75", "50", "25", "0"].sample.to_i }
+    score { rand(40..60) }
   end
 end
