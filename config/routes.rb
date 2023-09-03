@@ -7,8 +7,8 @@ Rails.application.routes.draw do
 
   namespace :v1 do
     post :vagas, to: 'jobs#create'
-    post :pessoas, to: 'peoples#create'
-    post :candidaturas, to: 'application#create'
+    post :pessoas, to: 'people#create'
+    post :candidaturas, to: 'applications#create'
 
     get '/vagas/:job_id/candidaturas/ranking', to: 'jobs#ranking', as: :ranking
   end
