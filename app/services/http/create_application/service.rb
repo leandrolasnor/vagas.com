@@ -18,7 +18,6 @@ class Http::CreateApplication::Service < Http::Service
       end
 
       _1.failure do |f|
-        debugger
         Rails.logger.error(f)
         [:internal_server_error]
       end
