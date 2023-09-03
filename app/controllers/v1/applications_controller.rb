@@ -9,6 +9,6 @@ class V1::ApplicationsController < V1::BaseController
   private
 
   def create_params
-    params.permit(:vaga_id, :pessoa_id)
+    params.permit(:id_vaga, :id_pessoa)
   end
 end
