@@ -5,9 +5,7 @@ class CalculateScore::Monad
   include Dry::Events::Publisher[:calculate_score]
   extend  Dry::Initializer
 
-  EVENT = 'calculated_score'
-
-  register_event EVENT
+  register_event 'calculated.score'
 
   param :id
 
@@ -16,11 +14,11 @@ class CalculateScore::Monad
   def call
     res = Try[StandardError] do
       application.score!
-      publish(EVENT, application: application)
+      publish('calculated.score', application: application)
       application
     end
 
-    res.error? ? Failure(res.exception.message) : res
+    res.error? ? Failure(res.exception.message) : res.value!
   end
 
   private
