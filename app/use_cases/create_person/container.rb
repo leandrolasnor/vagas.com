@@ -3,6 +3,6 @@
 class CreatePerson::Container
   extend Dry::Container::Mixin
 
-  register 'steps.validate', -> { ::Steps::Validate.new }
-  register 'steps.create', -> { ::Steps::Create.new }
+  register 'steps.validate', -> { CreatePerson::Steps::Validate.new }
+  register 'steps.create', -> { CreatePerson::Steps::Create.new }
 end

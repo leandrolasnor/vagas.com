@@ -4,12 +4,9 @@ class CreatePerson::Steps::Validate
   include Dry::Monads[:result]
   extend  Dry::Initializer
 
-  option :contract, default: -> { ::Contract }
+  option :contract, default: -> { CreatePerson::Contract.new }
 
   def call(params)
-    validate = contract.new.(params)
-    Failure(validate.errors.to_h.to_json) if validate.failure?
-
-    Success params
+    contract.(params).to_monad
   end
 end
