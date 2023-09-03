@@ -2,6 +2,6 @@
 
 class Http::Ranking::Contract < Dry::Validation::Contract
   params do
-    required(:vaga_id).filled(:integer)
+    required(:job_id).filled(:integer)
   end
 end

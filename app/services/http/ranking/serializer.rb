@@ -3,8 +3,6 @@
 class Http::Ranking::Serializer < ActiveModel::Serializer
   attributes :nome, :profissao, :localizacao, :nivel, :score
 
-  private
-
   def nome
     object.person.name
   end
@@ -22,6 +20,6 @@ class Http::Ranking::Serializer < ActiveModel::Serializer
   end
 
   def score
-    object.application.score
+    object.score
   end
 end

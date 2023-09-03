@@ -1,21 +1,14 @@
 # frozen_string_literal: true
 
 class Http::Ranking::Service < Http::Service
-  option :serializer, default: -> { ::Serializer }
-  option :monad, default: -> { Ranking::Monad }
+  option :serializer, default: -> { Http::Ranking::Serializer }
+  option :monad, default: -> { Ranking::Monad.new }
 
-  Contract = Http::Ranking::Contract
+  Contract = Http::Ranking::Contract.new
 
   def call
-    monad.new(params[:job_id]).call do
-      _1.failure do |e|
-        Rails.logger.error(e)
-        [:internal_server_error]
-      end
+    res = monad.(params[:job_id])
 
-      _1.success do |list|
-        [:ok, list, serializer]
-      end
-    end
+    [:ok, res.value!, serializer]
   end
 end
