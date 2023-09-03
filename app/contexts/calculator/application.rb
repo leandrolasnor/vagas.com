@@ -23,6 +23,7 @@ class Calculator::Application
 
   def score!
     application.update(score: calcule_score)
+    calcule_score
   end
 
   private
