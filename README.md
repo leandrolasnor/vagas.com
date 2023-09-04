@@ -60,9 +60,9 @@ _presumo que nesse momento seu ambiente esteja devidamente configurado_
   * Servidor local do redis `Ready to accept connections`
   * Servidor local Puma rodando na porta `3000` e expondo localmente nossa api atraves do endereço `127.0.0.1:3000`
   * Uma unidade de worker do Resque ouvindo a fila `dev_default`
-* Acesse pelo navegador `http://127.0.0.1:3000/api-docs`
-  * Você deverá ser capaz de acessar a interface web do swagger
-    * Aqui voce poderá checar a documentação dos endpoints api e testá-los, enviando algumas requisções contra a api
+* Acesse o [`Swagger`](http://127.0.0.1:3000/api-docs)
+  * Você deverá ser capaz de acessar a sua interface web
+    * Aqui voce poderá checar a documentação dos endpoints e testá-los, enviando algumas requisições http
       1. Crie 3 registros de pessoa na base de dados usando o endpoint `/v1/pessoas`
       2. Crie 1 registro de vaga na base de dados usando o endpoint `/v1/vagas`
       3. Realize a candidatura de todas as pessoas na vaga recém criada usando o endpoint `/v1/candidaturas`
