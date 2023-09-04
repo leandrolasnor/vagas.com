@@ -30,7 +30,9 @@ gem 'dry-validation'
 
 gem 'redis'
 
-gem 'sidekiq'
+gem 'hiredis'
+
+gem 'resque'
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
@@ -63,8 +65,8 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker', github: 'faker-ruby/faker'
   gem 'rspec-rails'
-  gem 'rswag-specs'
   gem 'rswag'
+  gem 'rswag-specs'
   gem 'simplecov', require: false
   gem 'timecop'
 end
