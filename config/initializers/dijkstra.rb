@@ -96,13 +96,15 @@ class Dijkstra
   end
 end
 
-Rails.cache.fetch(:edges) do
-  [
-    ['A', 'B', 5],
-    ['B', 'C', 7],
-    ['C', 'E', 4],
-    ['E', 'D', 10],
-    ['D', 'B', 3],
-    ['D', 'F', 8]
-  ]
+Rails.cache.fetch(:dijkstra) do
+  Dijkstra.new(
+    [
+      ['A', 'B', 5],
+      ['B', 'C', 7],
+      ['C', 'E', 4],
+      ['E', 'D', 10],
+      ['D', 'B', 3],
+      ['D', 'F', 8]
+    ]
+  )
 end
