@@ -52,18 +52,21 @@ _presumo que nesse momento seu ambiente esteja devidamente configurado_
     * `git pull`
     * `rails db:migrate`
     * `rspec spec` 
-    * `rails s`
+    * `rails s` # -------- alternativa: `rails s -b 0.0.0.0 -p 3000`
   * No **terceiro** rode:
     * `rake resque:work QUEUE=dev_default`
 
 * A partir de agora voce tem:
   * Servidor local do redis `Ready to accept connections`
-  * Servidor local Puma rodando na porta `3000` e expondo localmente nossa api atraves do endereço `127.0.0.1:3000`
+  * Servidor local Puma rodando na porta `3000` e expondo localmente a api atraves do endereço `http://127.0.0.1:3000` ou `http://localhost:3000`
   * Uma unidade de worker do Resque ouvindo a fila `dev_default`
-* Acesse o [`Swagger`](http://127.0.0.1:3000/api-docs)
+* Agora acesse o [`Swagger`](http://127.0.0.1:3000/api-docs)
   * Você deverá ser capaz de acessar a sua interface web
-    * Aqui voce poderá checar a documentação dos endpoints e testá-los, enviando algumas requisições http
+  * Verifique o campo `defaultHost` na interface do [`Swagger`](http://localhost:3000/api-docs) e avalie se a url esta correta (_127.0.0.1:3000_ ou _localhost:3000_)
+    * Nessa interface você poderá validar a documentação dos endpoints e testá-los, enviando algumas requisições http
       1. Crie 3 registros de pessoa na base de dados usando o endpoint `/v1/pessoas`
       2. Crie 1 registro de vaga na base de dados usando o endpoint `/v1/vagas`
       3. Realize a candidatura de todas as pessoas na vaga recém criada usando o endpoint `/v1/candidaturas`
       4. Visualize a lista decrescente de candidaturas ordenadas pelo campo `score` usando o endpoint `/v1/vagas/:job_id/candidaturas/ranking`
+
+`T`
