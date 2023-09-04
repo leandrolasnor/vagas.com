@@ -4,12 +4,13 @@ class Http::CreateApplication::Service < Http::Service
   option :serializer, default: -> { Http::CreateApplication::Serializer }
   option :transaction, default: -> { CreateApplication::Transaction.new }
   option :worker, default: -> { Http::CreateApplication::CalculateScore::Job }
+  option :queueer, default: -> { Proc.new { Resque.enqueue(worker, _1) } }
 
   Contract = Http::CreateApplication::Contract.new
 
   def call
     transaction.operations[:create].subscribe('application.created') do
-      Resque.enqueue(worker, _1[:application].id)
+      queueer.(_1[:application].id)
     end
 
     transaction.(params) do
