@@ -13,6 +13,7 @@ class CreatePerson::Contract < ApplicationContract
     required(:nome).filled(:string)
     required(:profissao).filled(:string)
     required(:localizacao).filled(:string)
+    required(:localizacao).value(included_in?: Rails.cache.fetch(:dijkstra).map.keys)
     required(:nivel).type(Types::LevelPerson).value(included_in?: CreatePerson::Model::Person.levels.keys)
   end
 end

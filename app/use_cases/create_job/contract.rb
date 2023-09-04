@@ -14,6 +14,7 @@ class CreateJob::Contract < ApplicationContract
     required(:titulo).filled(:string)
     required(:descricao).filled(:string)
     required(:localizacao).filled(:string)
+    required(:localizacao).value(included_in?: Rails.cache.fetch(:dijkstra).map.keys)
     required(:nivel).type(Types::LevelJob).value(included_in?: CreateJob::Model::Job.levels.keys)
   end
 end
