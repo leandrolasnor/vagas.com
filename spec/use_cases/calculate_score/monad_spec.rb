@@ -3,18 +3,20 @@
 require 'rails_helper'
 RSpec.describe CalculateScore::Monad do
   describe '#call' do
-    let(:edges) do
-      [
-        ['A', 'B', 5],
-        ['B', 'C', 7],
-        ['C', 'E', 4],
-        ['E', 'D', 10],
-        ['D', 'B', 3],
-        ['D', 'F', 8]
-      ]
+    let(:dijkstra) do
+      Dijkstra.new(
+        [
+          ['A', 'B', 5],
+          ['B', 'C', 7],
+          ['C', 'E', 4],
+          ['E', 'D', 10],
+          ['D', 'B', 3],
+          ['D', 'F', 8]
+        ]
+      )
     end
 
-    before { allow(Rails.cache).to receive(:fetch).with(:edges).and_return(edges) }
+    before { allow(Rails.cache).to receive(:fetch).with(:dijkstra).and_return(dijkstra) }
 
     context 'when application exist' do
       let(:call) { described_class.new.(application.id) }

@@ -5,6 +5,19 @@ require 'swagger_helper'
 RSpec.describe JobsController do
   subject(:api_request) { |example| submit_request(example.metadata) }
 
+  let(:dijkstra) do
+    Dijkstra.new(
+      [
+        ['A', 'B', 5],
+        ['B', 'C', 7],
+        ['C', 'E', 4],
+        ['E', 'D', 10],
+        ['D', 'B', 3],
+        ['D', 'F', 8]
+      ]
+    )
+  end
+
   path '/v1/vagas' do
     post('create job') do
       consumes 'application/json'
@@ -27,7 +40,7 @@ RSpec.describe JobsController do
               empresa: 'Nome da Empresa',
               titulo: 'Titulo da Vaga',
               descricao: 'Descricao da Vaga',
-              localizacao: 'Remoto',
+              localizacao: 'C',
               nivel: 2
             }
           end
@@ -37,12 +50,15 @@ RSpec.describe JobsController do
               empresa: 'Nome da Empresa',
               titulo: 'Titulo da Vaga',
               descricao: 'Descricao da Vaga',
-              localizacao: 'Remoto',
+              localizacao: 'C',
               nivel: CreateJob::Model::Job.levels.keys[params[:nivel]]
             }
           end
 
-          before { api_request }
+          before do
+            allow(Rails.cache).to receive(:fetch).with(:dijkstra).and_return(dijkstra)
+            api_request
+          end
 
           it 'must be able to create a new person' do
             expect(response).to have_http_status(:created)
@@ -65,11 +81,15 @@ RSpec.describe JobsController do
 
           let(:expected_body) do
             {
+              localizacao: ["must be one of: A, B, C, D, E, F"],
               nivel: ["must be one of: trainee, junior, full, senior, specialist"]
             }
           end
 
-          before { api_request }
+          before do
+            allow(Rails.cache).to receive(:fetch).with(:dijkstra).and_return(dijkstra)
+            api_request
+          end
 
           it 'must be able to get a error message about nivel field' do
             expect(response).to have_http_status(:unprocessable_entity)
@@ -116,14 +136,14 @@ RSpec.describe JobsController do
                 nome: people.first.name,
                 profissao: people.first.profession,
                 localizacao: people.first.location,
-                nivel: people.first.level,
+                nivel: Ranking::Model::Person.levels.keys[people.first.level],
                 score: 100
               },
               {
                 nome: people.second.name,
                 profissao: people.second.profession,
                 localizacao: people.second.location,
-                nivel: people.second.level,
+                nivel: Ranking::Model::Person.levels.keys[people.second.level],
                 score: 50
               }
             ]

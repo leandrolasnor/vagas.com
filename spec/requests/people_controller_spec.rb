@@ -5,6 +5,19 @@ require 'swagger_helper'
 RSpec.describe PeopleController do
   subject(:api_request) { |example| submit_request(example.metadata) }
 
+  let(:dijkstra) do
+    Dijkstra.new(
+      [
+        ['A', 'B', 5],
+        ['B', 'C', 7],
+        ['C', 'E', 4],
+        ['E', 'D', 10],
+        ['D', 'B', 3],
+        ['D', 'F', 8]
+      ]
+    )
+  end
+
   path '/v1/pessoas' do
     post('create person') do
       consumes 'application/json'
@@ -39,7 +52,10 @@ RSpec.describe PeopleController do
             }
           end
 
-          before { api_request }
+          before do
+            allow(Rails.cache).to receive(:fetch).with(:dijkstra).and_return(dijkstra)
+            api_request
+          end
 
           it 'must be able to create a new person' do
             expect(response).to have_http_status(:created)
@@ -65,7 +81,10 @@ RSpec.describe PeopleController do
             }
           end
 
-          before { api_request }
+          before do
+            allow(Rails.cache).to receive(:fetch).with(:dijkstra).and_return(dijkstra)
+            api_request
+          end
 
           it 'must be able to get a error message about nivel field' do
             expect(response).to have_http_status(:unprocessable_entity)

@@ -16,15 +16,17 @@ RSpec.describe Calculator::Application do
     end
 
     before do
-      allow(Rails.cache).to receive(:fetch).with(:edges).and_return(
-        [
-          ['A', 'B', 5],
-          ['B', 'C', 7],
-          ['C', 'E', 4],
-          ['E', 'D', 10],
-          ['D', 'B', 3],
-          ['D', 'F', 8]
-        ]
+      allow(Rails.cache).to receive(:fetch).with(:dijkstra).and_return(
+        Dijkstra.new(
+          [
+            ['A', 'B', 5],
+            ['B', 'C', 7],
+            ['C', 'E', 4],
+            ['E', 'D', 10],
+            ['D', 'B', 3],
+            ['D', 'F', 8]
+          ]
+        )
       )
     end
 

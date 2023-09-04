@@ -6,7 +6,7 @@ RSpec.describe Http::CreateApplication::CalculateScore::Job do
     context 'on Failure' do
       before do
         allow(Rails.logger).to receive(:error)
-        described_class.new.perform(0)
+        described_class.perform(0)
       end
 
       it 'must be able to record a exception message on logger' do
@@ -17,21 +17,23 @@ RSpec.describe Http::CreateApplication::CalculateScore::Job do
     context 'on Success' do
       let(:application) { create(:application) }
 
-      let(:edges) do
-        [
-          ['A', 'B', 5],
-          ['B', 'C', 7],
-          ['C', 'E', 4],
-          ['E', 'D', 10],
-          ['D', 'B', 3],
-          ['D', 'F', 8]
-        ]
+      let(:dijkstra) do
+        Dijkstra.new(
+          [
+            ['A', 'B', 5],
+            ['B', 'C', 7],
+            ['C', 'E', 4],
+            ['E', 'D', 10],
+            ['D', 'B', 3],
+            ['D', 'F', 8]
+          ]
+        )
       end
 
       before do
-        allow(Rails.cache).to receive(:fetch).with(:edges).and_return(edges)
         allow(Rails.logger).to receive(:error)
-        described_class.new.perform(application.id)
+        allow(Rails.cache).to receive(:fetch).with(:dijkstra).and_return(dijkstra)
+        described_class.perform(application.id)
       end
 
       it 'must not be able to record a exception message on logger' do

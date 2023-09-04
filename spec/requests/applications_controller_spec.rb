@@ -37,14 +37,14 @@ RSpec.describe ApplicationsController do
           end
 
           before do
-            allow(Http::CreateApplication::CalculateScore::Job).to receive(:perform_later)
+            allow(Resque).to receive(:enqueue)
             api_request
           end
 
           it 'must be able to create a new application' do
             expect(response).to have_http_status(:created)
             expect(json_body).to match(expected_body)
-            expect(Http::CreateApplication::CalculateScore::Job).to have_received(:perform_later)
+            expect(Resque).to have_received(:enqueue)
           end
         end
       end
@@ -66,14 +66,47 @@ RSpec.describe ApplicationsController do
           end
 
           before do
-            allow(Http::CreateApplication::CalculateScore::Job).to receive(:perform_later)
+            allow(Resque).to receive(:enqueue)
             api_request
           end
 
           it 'must be able to get a error message about nivel field' do
             expect(response).to have_http_status(:unprocessable_entity)
             expect(json_body).to match(expected_body)
-            expect(Http::CreateApplication::CalculateScore::Job).not_to have_received(:perform_later)
+            expect(Resque).not_to have_received(:enqueue)
+          end
+        end
+      end
+
+      response 422, 'Unprocessable Entity' do
+        context 'when the person has already applied for the vacancy' do
+          let(:job) { create(:job) }
+          let(:person) { create(:person) }
+          let(:application) { create(:application, job: job, person: person) }
+
+          let(:params) do
+            {
+              id_vaga: job.id,
+              id_pessoa: person.id
+            }
+          end
+
+          let(:expected_body) do
+            {
+              application: ['The person has already applied for the vacancy']
+            }
+          end
+
+          before do
+            application
+            allow(Resque).to receive(:enqueue)
+            api_request
+          end
+
+          it 'must be able to get a error message about has already applied for the vacancy' do
+            expect(response).to have_http_status(:unprocessable_entity)
+            expect(json_body).to match(expected_body)
+            expect(Resque).not_to have_received(:enqueue)
           end
         end
       end
