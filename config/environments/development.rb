@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
@@ -27,7 +29,7 @@ Rails.application.configure do
   else
     config.action_controller.perform_caching = false
 
-    config.cache_store = :null_store
+    config.cache_store = :redis_cache_store, { url: ENV.fetch('REDIS_URL', 'redis://127.0.0.1:6379') }
   end
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
@@ -53,6 +55,8 @@ Rails.application.configure do
   # Highlight code that triggered database queries in logs.
   config.active_record.verbose_query_logs = true
 
+  config.active_job.queue_adapter     = :resque
+  config.active_job.queue_name_prefix = "dev"
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
