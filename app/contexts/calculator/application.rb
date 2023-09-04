@@ -10,9 +10,8 @@ class Calculator::Application
   option :job, default: -> { application.job }
   option :person, default: -> { application.person }
 
-  option :edges, default: -> { Rails.cache.fetch(:edges) }
-  option :graph, default: -> { Dijkstra.new(edges) }
-  option :trace, default: -> { graph.(job.location, person.location) }
+  option :dijkstra, default: -> { Rails.cache.fetch(:dijkstra) }
+  option :trace, default: -> { dijkstra.(job.location, person.location) }
 
   option :d, default: -> { distances.select { _2.include?(trace.distance) }.keys[0].to_s.to_i }
 
