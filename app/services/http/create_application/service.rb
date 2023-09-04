@@ -9,7 +9,7 @@ class Http::CreateApplication::Service < Http::Service
 
   def call
     transaction.operations[:create].subscribe('application.created') do
-      worker.perform_later(_1[:application].id)
+      Resque.enqueue(worker, _1[:application].id)
     end
 
     transaction.(params) do
