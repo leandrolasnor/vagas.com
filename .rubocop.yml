@@ -213,6 +213,7 @@ Style/MethodCallWithArgsParentheses:
     - resource
     - failure
     - load_extensions
+    - enum
   Exclude:
     - 'spec/**/*'
     - db/schema.rb
