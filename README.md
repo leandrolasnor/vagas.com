@@ -1,24 +1,69 @@
-# README
+# Desafio para Engenheiro(a) de Software - VAGAS.com
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Este documento descreve o passo a passo para rodar a aplicação referente ao desafio da vaga de Engenheiro(a) de Software da VAGAS.com.
 
-Things you may want to cover:
+## Considerações sobre a ambiente
 
-* Ruby version
+* Uma image docker foi publicada no [Docker Hub](https://hub.docker.com/layers/leandrolasnor/ruby/vagas.com/images/sha256-cd6cb61240550fb705a38862790902f1a96bcfd2824e357a006682b498fe1d1f?context=explore)
 
-* System dependencies
+* Use o comando `docker compose up -d` para baixar a imagem e subir o container
 
-* Configuration
+```
+# docker-compose.yml
 
-* Database creation
+services:
+  environment:
+    image: leandrolasnor/ruby:vagas.com
+    container_name: dev.vagas.com
+    stdin_open: true
+    tty: true
+    ports:
+      - "3000:3000"
+```
+* Tudo bem se não quiser usar o Docker 
 
-* Database initialization
+  * O desafio foi construído usando
+    * Ruby 3.2.2
+    * Bundler 2.4.19
 
-* How to run the test suite
+## Considerações sobre a aplicação
 
-* Services (job queues, cache servers, search engines, etc.)
+#### Conceitos utilizados na resolução do problema
+* Princípio de Inversão de Dependência
+* Princípio da Segregação da Interface
+* Princípio da responsabilidade única
+* Princípio da substituição de Liskov
+* Princípio Aberto-Fechado
+* Background Processing
+* Domain Driven Design
+* N+1 query problem
+* Código Limpo
+* Rubocop
+* Dry-rb
 
-* Deployment instructions
+## Passo a Passo de como executar a solução
 
-* ...
+_presumo que nesse momento seu ambiente esteja devidamente configurado_
+
+* Abra três terminais ou três instancias do "terminal integrado" no seu editor
+  * No **primeiro** rode:
+    * `redis-server`
+  * No **segundo** rode:
+    * `git pull`
+    * `rails db:migrate`
+    * `rspec spec` 
+    * `rails s`
+  * No **terceiro** rode:
+    * `rake resque:work QUEUE=dev_default`
+
+* A partir de agora voce tem:
+  * Servidor local do redis `Ready to accept connections`
+  * Servidor local Puma rodando na porta `3000` e expondo localmente nossa api atraves do endereço `127.0.0.1:3000`
+  * Uma unidade de worker do Resque ouvindo a fila `dev_default`
+* Acesse pelo navegador `http://127.0.0.1:3000/api-docs`
+  * Você deverá ser capaz de acessar a interface web do swagger
+    * Aqui voce poderá checar a documentação dos endpoints api e testá-los, enviando algumas requisções contra a api
+      1. Crie 3 registros de pessoa na base de dados usando o endpoint `/v1/pessoas`
+      2. Crie 1 registro de vaga na base de dados usando o endpoint `/v1/vagas`
+      3. Realize a candidatura de todas as pessoas na vaga recém criada usando o endpoint `/v1/candidaturas`
+      4. Visualize a lista decrescente de candidaturas ordenadas pelo campo `score` usando o endpoint `/v1/vagas/:job_id/candidaturas/ranking`
