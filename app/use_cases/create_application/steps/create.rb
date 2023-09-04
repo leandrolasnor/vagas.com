@@ -10,10 +10,11 @@ class CreateApplication::Steps::Create
   option :model, default: -> { CreateApplication::Model::Application }
 
   def call(params)
-    model.create do
+    created = model.create do
       _1.job_id = params[:id_vaga]
       _1.person_id = params[:id_pessoa]
-      publish('application.created', application: _1)
     end
+    publish('application.created', application: created)
+    created
   end
 end

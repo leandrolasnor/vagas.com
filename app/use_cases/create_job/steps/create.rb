@@ -10,13 +10,14 @@ class CreateJob::Steps::Create
   option :model, default: -> { CreateJob::Model::Job }
 
   def call(params)
-    model.create do
+    created = model.create do
       _1.company = params[:empresa]
       _1.title = params[:titulo]
       _1.description = params[:descricao]
       _1.location = params[:localizacao]
       _1.level = params[:nivel]
-      publish('job.created', job: _1)
     end
+    publish('job.created', job: created)
+    created
   end
 end

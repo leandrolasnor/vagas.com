@@ -10,12 +10,13 @@ class CreatePerson::Steps::Create
   option :model, default: -> { CreatePerson::Model::Person }
 
   def call(params)
-    model.create do
+    created = model.create do
       _1.name = params[:nome]
       _1.profession = params[:profissao]
       _1.location = params[:localizacao]
       _1.level = params[:nivel]
-      publish('person.created', person: _1)
     end
+    publish('person.created', person: created)
+    created
   end
 end
