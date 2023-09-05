@@ -68,5 +68,3 @@ _presumo que nesse momento seu ambiente esteja devidamente configurado_
       2. Crie 1 registro de vaga na base de dados usando o endpoint `/v1/vagas`
       3. Realize a candidatura de todas as pessoas na vaga recém criada usando o endpoint `/v1/candidaturas`
       4. Visualize a lista decrescente de candidaturas ordenadas pelo campo `score` usando o endpoint `/v1/vagas/:job_id/candidaturas/ranking`
-
-`T`
