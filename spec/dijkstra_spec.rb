@@ -4,10 +4,11 @@ require 'rails_helper'
 RSpec.describe Dijkstra do
   describe 'Calculo minimum distance between two vertices on graph' do
     context 'scopes [A, F]' do
-      let(:job) { create(:job, location: 'A') }
-      let(:person) { create(:person, location: 'F') }
+      subject { graph.(a, f).distance }
+
+      let(:a) { 'A' }
+      let(:f) { 'F' }
       let(:graph) { described_class.new(edges) }
-      let(:trace) { graph.(job.location, person.location) }
       let(:expected_distance) { 16 }
 
       let(:edges) do
@@ -21,9 +22,7 @@ RSpec.describe Dijkstra do
         ]
       end
 
-      it 'must be able to calculate a distance between edges [A, F]' do
-        expect(trace.distance).to eq(expected_distance)
-      end
+      it { is_expected.to eq(expected_distance) }
     end
   end
 end

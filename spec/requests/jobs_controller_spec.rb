@@ -18,6 +18,8 @@ RSpec.describe JobsController do
     )
   end
 
+  before { allow(Rails.cache).to receive(:fetch).with(:dijkstra).and_return(dijkstra) }
+
   path '/v1/vagas' do
     post('create job') do
       consumes 'application/json'
@@ -55,10 +57,7 @@ RSpec.describe JobsController do
             }
           end
 
-          before do
-            allow(Rails.cache).to receive(:fetch).with(:dijkstra).and_return(dijkstra)
-            api_request
-          end
+          before { api_request }
 
           it 'must be able to create a new person' do
             expect(response).to have_http_status(:created)
@@ -81,15 +80,12 @@ RSpec.describe JobsController do
 
           let(:expected_body) do
             {
-              localizacao: ["must be one of: A, B, C, D, E, F"],
+              localizacao: [I18n.t('dry_validation.errors.unknown_location')],
               nivel: ["must be one of: trainee, junior, full, senior, specialist"]
             }
           end
 
-          before do
-            allow(Rails.cache).to receive(:fetch).with(:dijkstra).and_return(dijkstra)
-            api_request
-          end
+          before { api_request }
 
           it 'must be able to get a error message about nivel field' do
             expect(response).to have_http_status(:unprocessable_entity)

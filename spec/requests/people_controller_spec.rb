@@ -18,6 +18,8 @@ RSpec.describe PeopleController do
     )
   end
 
+  before { allow(Rails.cache).to receive(:fetch).with(:dijkstra).and_return(dijkstra) }
+
   path '/v1/pessoas' do
     post('create person') do
       consumes 'application/json'
@@ -52,10 +54,7 @@ RSpec.describe PeopleController do
             }
           end
 
-          before do
-            allow(Rails.cache).to receive(:fetch).with(:dijkstra).and_return(dijkstra)
-            api_request
-          end
+          before { api_request }
 
           it 'must be able to create a new person' do
             expect(response).to have_http_status(:created)
@@ -81,10 +80,7 @@ RSpec.describe PeopleController do
             }
           end
 
-          before do
-            allow(Rails.cache).to receive(:fetch).with(:dijkstra).and_return(dijkstra)
-            api_request
-          end
+          before { api_request }
 
           it 'must be able to get a error message about nivel field' do
             expect(response).to have_http_status(:unprocessable_entity)
