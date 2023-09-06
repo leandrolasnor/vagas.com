@@ -37,3 +37,4 @@ en:
       person_not_found: 'Person not found!'
       level_invalid: 'Level Invalid!'
       already_applied: 'The person has already applied for the vacancy'
+      unknown_location: 'Unknown location'
