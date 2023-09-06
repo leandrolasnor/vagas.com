@@ -28,7 +28,7 @@ services:
 
 ## Considerações sobre a aplicação
 
-#### Conceitos utilizados na resolução do problema
+#### Conceitos e ferramentas utilizadas na resolução do problema
 * Princípio de Inversão de Dependência
 * Princípio da Segregação da Interface
 * Princípio da responsabilidade única
