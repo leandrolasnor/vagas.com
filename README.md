@@ -2,7 +2,7 @@
 
 Este documento descreve o passo a passo para rodar a aplicação referente ao desafio da vaga de Engenheiro(a) de Software da VAGAS.com.
 
-## Considerações sobre a ambiente
+## Considerações sobre o ambiente
 
 * Uma image docker foi publicada no [Docker Hub](https://hub.docker.com/layers/leandrolasnor/ruby/vagas.com/images/sha256-cd6cb61240550fb705a38862790902f1a96bcfd2824e357a006682b498fe1d1f?context=explore)
 
