@@ -67,6 +67,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rswag'
   gem 'rswag-specs'
+  gem 'shoulda-matchers'
   gem 'simplecov', require: false
   gem 'timecop'
 end
