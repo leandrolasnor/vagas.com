@@ -9,12 +9,22 @@ module Types
 end
 
 class CreateJob::Contract < ApplicationContract
+  extend Dry::Initializer
+
+  option :locations, default: -> { Rails.cache.fetch(:dijkstra).map.keys }
+
   params do
     required(:empresa).filled(:string)
     required(:titulo).filled(:string)
     required(:descricao).filled(:string)
     required(:localizacao).filled(:string)
-    required(:localizacao).value(included_in?: Rails.cache.fetch(:dijkstra).map.keys)
     required(:nivel).type(Types::LevelJob).value(included_in?: CreateJob::Model::Job.levels.keys)
   end
+
+  register_macro(:known_location) do
+    known = locations.include?(values[:localizacao])
+    key(:localizacao).failure(:unknown_location) unless known
+  end
+
+  rule(:localizacao).validate(:known_location)
 end
