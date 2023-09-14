@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-RSpec.describe Calculator::Application do
+RSpec.describe CalculateScore::Context::Calculator::Application do
   describe '.score!' do
     let(:expected_score) { 37 }
     let(:context) { described_class.new(application) }
 
     let(:application) do
-      take = create(:application)
+      take = create(:application, :calculate_score)
       take.job.location = 'A'
       take.person.location = 'F'
       take.person.level = 2

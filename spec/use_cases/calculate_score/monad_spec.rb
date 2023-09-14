@@ -22,7 +22,7 @@ RSpec.describe CalculateScore::Monad do
       let(:call) { described_class.new.(application.id) }
       let(:job) { create(:job, location: 'A', level: 4) }
       let(:person) { create(:person, location: 'F', level: 2) }
-      let(:application) { create(:application, job: job, person: person, score: some_score) }
+      let(:application) { create(:application, job_id: job.id, person_id: person.id, score: some_score) }
       let(:some_score) { 1000 }
       let(:expected_score) { 37 }
 

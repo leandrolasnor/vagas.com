@@ -82,7 +82,7 @@ RSpec.describe ApplicationsController do
         context 'when the person has already applied for the vacancy' do
           let(:job) { create(:job) }
           let(:person) { create(:person) }
-          let(:application) { create(:application, job: job, person: person) }
+          let(:application) { create(:application, job_id: job.id, person_id: person.id) }
 
           let(:params) do
             {

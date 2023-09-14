@@ -15,7 +15,9 @@ RSpec.describe Http::CreateApplication::CalculateScore::Job do
     end
 
     context 'on Success' do
-      let(:application) { create(:application) }
+      let(:job) { create(:job) }
+      let(:person) { create(:person) }
+      let(:application) { create(:application, job_id: job.id, person_id: person.id) }
 
       let(:dijkstra) do
         Dijkstra.new(

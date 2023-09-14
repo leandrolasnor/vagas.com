@@ -59,7 +59,7 @@ RSpec.describe CreateApplication::Contract, type: :contract do
   end
 
   context 'when the person has already applied for the vacancy' do
-    let(:application) { create(:application) }
+    let(:application) { create(:application, :create_application) }
     let(:params) do
       {
         id_vaga: application.job_id,
