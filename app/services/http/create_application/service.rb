@@ -4,7 +4,7 @@ class Http::CreateApplication::Service < Http::Service
   option :serializer, default: -> { Http::CreateApplication::Serializer }
   option :transaction, default: -> { CreateApplication::Transaction.new }
   option :worker, default: -> { Http::CreateApplication::CalculateScore::Job }
-  option :queueer, default: -> { Proc.new { Resque.enqueue(worker, _1) } }
+  option :queueer, default: -> { proc { Resque.enqueue(worker, _1) } }
 
   Contract = Http::CreateApplication::Contract.new
 
