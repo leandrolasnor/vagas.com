@@ -3,11 +3,12 @@
 class CreatePerson::Steps::Create
   include Dry::Monads[:result]
   include Dry::Events::Publisher[:person_created]
+  include Dry.Types()
   extend  Dry::Initializer
 
   register_event 'person.created'
 
-  option :model, default: -> { CreatePerson::Model::Person }
+  option :model, type: Interface(:create), default: -> { CreatePerson::Model::Person }
 
   def call(params)
     created = model.create do

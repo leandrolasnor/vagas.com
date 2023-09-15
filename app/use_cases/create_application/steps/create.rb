@@ -3,11 +3,12 @@
 class CreateApplication::Steps::Create
   include Dry::Monads[:result]
   include Dry::Events::Publisher[:application_created]
+  include Dry.Types()
   extend  Dry::Initializer
 
   register_event 'application.created'
 
-  option :model, default: -> { CreateApplication::Model::Application }
+  option :model, type: Interface(:create), default: -> { CreateApplication::Model::Application }
 
   def call(params)
     created = model.create do

@@ -2,9 +2,10 @@
 
 class CreateJob::Steps::Validate
   include Dry::Monads[:result]
+  include Dry.Types()
   extend Dry::Initializer
 
-  option :contract, default: -> { CreateJob::Contract.new }
+  option :contract, type: Interface(:call), default: -> { CreateJob::Contract.new }
 
   def call(params)
     contract.(params).to_monad

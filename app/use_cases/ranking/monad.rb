@@ -2,9 +2,10 @@
 
 class Ranking::Monad
   include Dry::Monads[:result]
+  include Dry.Types()
   extend  Dry::Initializer
 
-  option :model, default: -> { Ranking::Model::Application }
+  option :model, type: Interface(:includes, :where, :limit, :offset, :order), default: -> { Ranking::Model::Application }
   option :limit, default: -> { 25 }
   option :offset, default: -> { 0 }
 

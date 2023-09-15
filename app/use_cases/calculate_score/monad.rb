@@ -3,11 +3,12 @@
 class CalculateScore::Monad
   include Dry::Monads[:result, :try]
   include Dry::Events::Publisher[:calculate_score]
+  include Dry.Types()
   extend  Dry::Initializer
 
   register_event 'score.calculated'
 
-  option :model, default: -> { CalculateScore::Model::Application }
+  option :model, type: Interface(:find), default: -> { CalculateScore::Model::Application }
 
   def call(id)
     Try(ActiveRecord::RecordNotFound) { model.find(id) }.

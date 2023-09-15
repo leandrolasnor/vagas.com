@@ -3,11 +3,12 @@
 class CreateJob::Steps::Create
   include Dry::Monads[:result]
   include Dry::Events::Publisher[:job_created]
+  include Dry.Types()
   extend Dry::Initializer
 
   register_event 'job.created'
 
-  option :model, default: -> { CreateJob::Model::Job }
+  option :model, type: Interface(:create), default: -> { CreateJob::Model::Job }
 
   def call(params)
     created = model.create do

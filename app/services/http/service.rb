@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class Http::Service
+  include Dry.Types()
   extend Dry::Initializer
 
-  param :params
+  param :params, type: Hash
 
   def self.call(args)
     contract = self::Contract.call(args.to_h)

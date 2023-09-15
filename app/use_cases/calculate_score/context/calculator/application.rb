@@ -19,7 +19,7 @@ class CalculateScore::Context::Calculator::Application
   option :nv, type: Strict::Integer, default: -> { job.level }, reader: :private
   option :nc, type: Strict::Integer, default: -> { person.level }, reader: :private
 
-  option :n, type: Strict::Integer, default: -> { 100 - (25 * (nv - nc).abs) }, reader: :private
+  option :n, type: Strict::Integer.constrained(lteq: 100, gteq: 0), default: -> { 100 - (25 * (nv - nc).abs) }, reader: :private
 
   def score!
     application.update(score: calcule_score)

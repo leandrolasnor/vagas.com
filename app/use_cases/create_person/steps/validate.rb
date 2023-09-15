@@ -2,9 +2,10 @@
 
 class CreatePerson::Steps::Validate
   include Dry::Monads[:result]
+  include Dry.Types()
   extend  Dry::Initializer
 
-  option :contract, default: -> { CreatePerson::Contract.new }
+  option :contract, type: Interface(:call), default: -> { CreatePerson::Contract.new }
 
   def call(params)
     contract.(params).to_monad
