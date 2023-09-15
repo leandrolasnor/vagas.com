@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Http::Ranking::Service < Http::Service
-  option :serializer, default: -> { Http::Ranking::Serializer }
-  option :monad, default: -> { Ranking::Monad.new }
+  option :serializer, type: Interface(:serializer_for), default: -> { Http::Ranking::Serializer }, reader: :private
+  option :monad, type: Interface(:call), default: -> { Ranking::Monad.new }, reader: :private
 
   Contract = Http::Ranking::Contract.new
 

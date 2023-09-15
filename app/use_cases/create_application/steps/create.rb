@@ -8,7 +8,7 @@ class CreateApplication::Steps::Create
 
   register_event 'application.created'
 
-  option :model, type: Interface(:create), default: -> { CreateApplication::Model::Application }
+  option :model, type: Interface(:create), default: -> { CreateApplication::Model::Application }, reader: :private
 
   def call(params)
     created = model.create do

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class Http::CreateApplication::Service < Http::Service
-  option :serializer, type: Interface(:serializer_for), default: -> { Http::CreateApplication::Serializer }
-  option :transaction, type: Interface(:call), default: -> { CreateApplication::Transaction.new }
-  option :worker, type: Interface(:perform), default: -> { Http::CreateApplication::CalculateScore::Job }
-  option :queueer, type: Instance(Proc), default: -> { proc { Resque.enqueue(worker, _1) } }
+  option :serializer, type: Interface(:serializer_for), default: -> { Http::CreateApplication::Serializer }, reader: :private
+  option :transaction, type: Interface(:call), default: -> { CreateApplication::Transaction.new }, reader: :private
+  option :worker, type: Interface(:perform), default: -> { Http::CreateApplication::CalculateScore::Job }, reader: :private
+  option :queueer, type: Instance(Proc), default: -> { proc { Resque.enqueue(worker, _1) } }, reader: :private
 
   Contract = Http::CreateApplication::Contract.new
 

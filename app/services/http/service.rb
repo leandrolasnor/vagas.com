@@ -4,7 +4,7 @@ class Http::Service
   include Dry.Types()
   extend Dry::Initializer
 
-  param :params, type: Hash
+  param :params, type: Hash, reader: :private
 
   def self.call(args)
     contract = self::Contract.call(args.to_h)
@@ -13,6 +13,7 @@ class Http::Service
     new(args.to_h).call
   rescue StandardError => error
     Rails.logger.error(error)
+    debugger
     [:internal_server_error]
   end
 end

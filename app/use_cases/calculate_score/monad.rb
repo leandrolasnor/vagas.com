@@ -8,7 +8,7 @@ class CalculateScore::Monad
 
   register_event 'score.calculated'
 
-  option :model, type: Interface(:find), default: -> { CalculateScore::Model::Application }
+  option :model, type: Interface(:find), default: -> { CalculateScore::Model::Application }, reader: :private
 
   def call(id)
     Try(ActiveRecord::RecordNotFound) { model.find(id) }.

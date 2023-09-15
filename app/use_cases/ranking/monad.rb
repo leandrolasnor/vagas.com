@@ -5,9 +5,9 @@ class Ranking::Monad
   include Dry.Types()
   extend  Dry::Initializer
 
-  option :model, type: Interface(:includes, :where, :limit, :offset, :order), default: -> { Ranking::Model::Application }
-  option :limit, default: -> { 25 }
-  option :offset, default: -> { 0 }
+  option :model, type: Interface(:includes, :where, :limit, :offset, :order), default: -> { Ranking::Model::Application }, reader: :private
+  option :limit, type: Strict::Integer, default: -> { 25 }, reader: :private
+  option :offset, type: Strict::Integer, default: -> { 0 }, reader: :private
 
   def call(job_id)
     Success(

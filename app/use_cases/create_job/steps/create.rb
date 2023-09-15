@@ -8,7 +8,7 @@ class CreateJob::Steps::Create
 
   register_event 'job.created'
 
-  option :model, type: Interface(:create), default: -> { CreateJob::Model::Job }
+  option :model, type: Interface(:create), default: -> { CreateJob::Model::Job }, reader: :private
 
   def call(params)
     created = model.create do

@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 class Http::CreatePerson::Service < Http::Service
-  option :serializer, default: -> { Http::CreatePerson::Serializer }
-  option :transaction, default: -> { CreatePerson::Transaction }
+  option :serializer, type: Interface(:serializer_for), default: -> { Http::CreatePerson::Serializer }, reader: :private
+  option :transaction, type: Interface(:call), default: -> { CreatePerson::Transaction.new }, reader: :private
 
   Contract = Http::CreatePerson::Contract.new
 
   def call
-    transaction.new.(params) do
+    transaction.(params) do
       _1.failure :validate do |f|
         [:unprocessable_entity, f.errors.to_h]
       end

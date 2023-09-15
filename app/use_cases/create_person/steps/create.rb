@@ -8,7 +8,7 @@ class CreatePerson::Steps::Create
 
   register_event 'person.created'
 
-  option :model, type: Interface(:create), default: -> { CreatePerson::Model::Person }
+  option :model, type: Interface(:create), default: -> { CreatePerson::Model::Person }, reader: :private
 
   def call(params)
     created = model.create do
