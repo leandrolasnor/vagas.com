@@ -14,7 +14,7 @@ Este documento descreve o passo a passo para rodar a aplicação referente ao de
 # docker-compose.yml
 
 services:
-  environment:
+  backend:
     image: leandrolasnor/ruby:vagas.com
     container_name: dev.vagas.com
     stdin_open: true
@@ -49,14 +49,14 @@ _presumo que nesse momento seu ambiente esteja devidamente configurado_
 
 * Abra três terminais ou três instancias do "terminal integrado" no seu editor
   * No **primeiro** rode:
-    * `redis-server`
+    * `docker compose exec redis-server`
   * No **segundo** rode:
-    * `git pull`
-    * `rails db:migrate`
-    * `rspec spec` 
-    * `rails s` # -------- alternativa: `rails s -b 0.0.0.0 -p 3000`
+    * `docker compose exec backend git pull`
+    * `docker compose exec backend bundle exec rake db:migrate:reset`
+    * `docker compose exec backend rspec spec`  
+    * `docker compose exec backend rails s` # -------- alternativa: `docker compose exec backend rails s -b 0.0.0.0 -p 3000`
   * No **terceiro** rode:
-    * `rake resque:work QUEUE=dev_default`
+    * `docker compose exec backend rake resque:work QUEUE=dev_default`
 
 * A partir de agora voce tem:
   * Servidor local do redis `Ready to accept connections`
