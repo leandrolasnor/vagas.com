@@ -10,6 +10,9 @@ RUN git clone https://github.com/leandrolasnor/vagas.com .
 RUN gem install bundler --version '2.4.19'
 RUN bundle
 
+ENTRYPOINT ["rm", "-f", "/api/tmp/pids/server.pid"]
+ENTRYPOINT ["git", "pull"]
+
 RUN rm -rf /root/.oh-my-zsh
 RUN sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 RUN usermod --shell /bin/zsh root
