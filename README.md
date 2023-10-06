@@ -54,7 +54,7 @@ _presumo que nesse momento seu ambiente esteja devidamente configurado_
     * `docker compose exec backend git pull`
     * `docker compose exec backend bundle exec rake db:migrate:reset`
     * `docker compose exec backend rspec spec` 
-    * `docker compose exec backend rails s` # -------- alternativa: `docker compose exec backend rails s -b 0.0.0.0 -p 3000`
+    * `docker compose exec backend sh -c "rails s"` # -------- alternativa: `docker compose exec backend sh -c "rails s -b 0.0.0.0 -p 3000"`
   * No **terceiro** rode:
     * `docker compose exec backend bundle exec rake resque:work QUEUE=dev_default`
 
