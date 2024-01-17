@@ -1,0 +1,14 @@
+# docker-compose.yml
+version: '3.8'
+services:
+  backend:
+    image: leandrolasnor/ruby:vagas.com
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    container_name: api.vagas.com
+    stdin_open: true
+    tty: true
+    command: sh
+    ports:
+      - 3000:3000

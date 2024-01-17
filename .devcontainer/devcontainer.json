@@ -1,0 +1,36 @@
+// For format details, see https://aka.ms/devcontainer.json.
+{
+	"name": "Vagas.com",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "backend",
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// This can be used to network with other containers or the host.
+	"forwardPorts": [3000],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"postCreateCommand": ".devcontainer/boot.sh",
+  "postStartCommand": ".devcontainer/start.sh",
+
+	// Configure tool-specific properties.
+	"customizations": {
+		"vscode": {
+			// Add the IDs of extensions you want installed when the container is created.
+			"extensions": [
+				"Shopify.ruby-lsp",
+        "eamodio.gitlens",
+        "donjayamanne.githistory",
+        "EditorConfig.EditorConfig",
+        "MS-CEINTL.vscode-language-pack-pt-BR",
+        "shyykoserhiy.git-autoconfig",
+        "AiryShift.spaces-inside-braces",
+        "bierner.github-markdown-preview",
+				"streetsidesoftware.code-spell-checker"
+			]
+		}
+	},
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	"remoteUser": "root"
+}
