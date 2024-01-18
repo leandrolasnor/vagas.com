@@ -17,7 +17,7 @@
 
 ## Com o processo de build concluido, faça:
 
-* Rode o comando no terminal: `bundle exc rails s -b '0.0.0.0'`
+* Rode o comando no terminal: `bundle exec rails s -b '0.0.0.0'`
 
 ## Documentação
 
