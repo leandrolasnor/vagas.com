@@ -10,7 +10,8 @@ COPY . $APP_HOME
 
 RUN bundle
 
-RUN chmod +x ./.devcontainer/*.sh
+RUN chmod +x ./.devcontainer/boot.sh
+RUN chmod +x ./.devcontainer/start.sh
 
 RUN rm -rf /root/.oh-my-zsh
 RUN sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
